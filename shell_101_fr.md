@@ -22,8 +22,8 @@ La "sortie" est l'information affichée par le programme lors de son exécution.
 #### Exercice :
 Décrivez ce que fait la commande `cal` :
 
-<div>{.hint-101-a}
-Tapez simplement la commande `cal` dans le terminal et appuyez sur Entrée. Ensuite, décrivez ce que vous voyez.
+<div class="hint">
+Indice: Tapez simplement la commande `cal` dans le terminal et appuyez sur Entrée. Ensuite, décrivez ce que vous voyez.
 </div>
 
 <div hidden class="solution"></div>
@@ -60,7 +60,7 @@ Vous devez utiliser la commande `cal` avec les arguments appropriés pour affich
 Que devez-vous taper dans le terminal pour y parvenir ?
 
 <div class="hint">
-</div>
+Indice:
 
 Les arguments servent à modifier le comportement d'une commande ou à fournir des informations supplémentaires.
 
@@ -109,10 +109,7 @@ ls -a
 Listez les éléments dans le répertoire courant. Combien d’éléments sont présents ? Combien de fichiers cachés ?
 
 <div class="hint">
-</div>
-
-<div>{.hint-101-c-1}
-Ça ne coûte rien de consulter la page de manuel de la commande `ls` pour voir quelles options sont disponibles.
+Indice: Ça ne coûte rien de consulter la page de manuel de la commande `ls` pour voir quelles options sont disponibles.
 </div>
 
 <div hidden class="solution"></div>
@@ -157,9 +154,7 @@ pwd
 Affichez le répertoire de travail actuel. Quel est son chemin absolu ?
 
 <div class="hint">
-</div>
-
-<div class="hint">
+Indice:
 La commande `pwd` permet d’afficher le répertoire de travail actuel, c’est-à-dire celui dans lequel vous vous trouvez.
 Vous pouvez l’utiliser pour savoir où vous êtes dans l’arborescence du système de fichiers.
 Un chemin commençant par `/` est un chemin absolu (depuis la racine du système). S’il ne commence pas par `/`, c’est un chemin relatif (par rapport à votre position actuelle).
@@ -198,7 +193,7 @@ Changez de répertoire vers `/tmp`.
 Listez le contenu du **répertoire parent** de `/tmp`. Quelle entrée n'est pas présente parmi : "app", "bin", "etc", "home", ou "var" ?
 
 <div class="hint">
-You can always use the `pwd` command to check your current working directory.
+Indice: You can always use the `pwd` command to check your current working directory.
 </div>
 
 <div hidden class="solution"></div>
@@ -299,7 +294,7 @@ cat <fichier1> <fichier2>
 Utilisez cat pour afficher le contenu de `secret1.txt`. De quoi parle ce fichier ?
 
 <div class="hint">
-Lisez bien le contenu de ce fichier si vous voulez une astuce sympa sur l’utilisation du terminal.
+Indice: Lisez bien le contenu de ce fichier si vous voulez une astuce sympa sur l’utilisation du terminal.
 </div>
 
 
@@ -334,6 +329,7 @@ Utilisez micro pour éditer `memo2.txt` dans le dossier `memos` :
 - Enregistrez le fichier et quittez l’éditeur.
 
 <div class="hint">
+Indice:
 Il existe de nombreux éditeurs de texte sous Linux, mais micro est simple et facile à prendre en main.
 D'autres éditeurs connus sont nano, vi, vim, et emacs, mais ils demandent plus d’apprentissage (sauf peut-être nano, qui est aussi assez simple).
 </div>
@@ -365,7 +361,7 @@ rm -r <répertoire>
 - Supprimez le répertoire `code` et tout son contenu.
 
 <div class="hint">
-Vous pouvez toujours utiliser la commande `ls` pour vérifier le contenu d’un répertoire avant de le supprimer.
+Indice: Vous pouvez toujours utiliser la commande `ls` pour vérifier le contenu d’un répertoire avant de le supprimer.
 </div>
 
 <div hidden class="solution"></div>
@@ -406,7 +402,8 @@ Pour finir créez une **copie** (l'archive originale doit donc être préservée
 <div hidden class="solution"></div>
 
 <div class="hint">
-Vous pouvez lister le contenu d'une archive avec la commande `tar -tf <nom_archive.tar>`.
+Indice: Vous pouvez lister le contenu d'une archive avec la commande `tar -tf <nom_archive.tar>`.
 
 Vous pouvez aussi extraire le contenu d'une archive avec la commande `tar -xf <nom_archive.tar>`. (Ce n’est pas nécessaire pour cet exercice, mais cela pourrait être très utile pour la suite.)
+</div>
 </div>
