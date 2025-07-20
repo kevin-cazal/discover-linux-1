@@ -297,7 +297,7 @@ Utilisez cat pour afficher le contenu de `secret1.txt`. De quoi parle ce fichier
 Indice: Lisez bien le contenu de ce fichier si vous voulez une astuce sympa sur l’utilisation du terminal.
 </div>
 
-Bon a savoir: La commande `cat` permet de concatener plusieurs fichiers (les affichers les uns après les autres). Cela peut être très utile lorsqu'on souhaite "fusionner" plusieurs fichier en un seul (cf l'exercice final de la partie 2).
+Bon à savoir: La commande `cat` permet de concatener plusieurs fichiers (les affichers les uns après les autres). Cela peut être très utile lorsqu'on souhaite "fusionner" plusieurs fichier en un seul (cf l'exercice final de la partie 2).
 
 
 ### 2 - micro : éditeur de texte
