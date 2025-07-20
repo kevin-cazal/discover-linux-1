@@ -407,3 +407,292 @@ Indice: Vous pouvez lister le contenu d'une archive avec la commande `tar -tf <n
 Vous pouvez aussi extraire le contenu d'une archive avec la commande `tar -xf <nom_archive.tar>`. (Ce n’est pas nécessaire pour cet exercice, mais cela pourrait être très utile pour la suite.)
 </div>
 </div>
+
+# Shell 102 : Édition de flux
+
+Cette section vous introduit à des commandes essentielles du shell pour traiter des fichiers texte et manipuler des flux de données. Vous apprendrez à utiliser les pipes, les redirections, et diverses commandes de traitement de texte pour extraire et manipuler des informations à partir de fichiers.  
+Vous apprendrez également à utiliser ces commandes pour résoudre des exercices pratiques.  
+Pour les exercices suivants, vous devrez ajouter les résultats dans un fichier nommé `answers.txt` ou dans le fichier approprié si cela est spécifié dans l'exercice.
+
+## Pipe et redirection
+
+Bon à savoir : lorsqu'un programme est exécuté dans le shell, il lit le flux d'entrée standard (stdin) et écrit dans le flux de sortie standard (stdout). Le shell permet de rediriger ces flux vers des fichiers ou d'autres commandes.
+
+![io1](images/1.svg.png.white_bg.png)
+![io2](images/2.svg.png.white_bg.png)
+![io3](images/3.svg.png.white_bg.png)
+![io4](images/4.svg.png.white_bg.png)
+![io5](images/5.svg.png.white_bg.png)
+![io6](images/6.svg.png.white_bg.png)
+
+Le pipe `|` est utilisé pour passer la sortie d'une commande en entrée d'une autre commande.  
+La redirection `>` est utilisée pour rediriger la sortie d'une commande vers un fichier.
+
+Vous pouvez enchaîner plusieurs commandes à l'aide de pipes.
+
+La redirection avec `>>` ajoute la sortie à un fichier au lieu de l'écraser.
+
+Dans les exercices suivants, vous utiliserez les pipes et les redirections pour traiter des fichiers texte et extraire des informations.
+
+Hint:
+Vous pouvez utiliser la commande `man` pour lire les pages de manuel des commandes que vous utiliserez afin d'en apprendre davantage sur leurs options et leur utilisation.
+
+## Préliminaire : extraire le contenu d'une archive tar
+
+Pour extraire le contenu d'une archive tar, vous pouvez utiliser la commande `tar` avec l'option `-xf` :
+
+Exercice:
+
+- Extrayez le contenu de l'archive `data_102.tar` dans votre répertoire personnel.  
+- Ensuite, accédez au répertoire `data_102` nouvellement créé par l'extraction de l'archive.
+
+
+## Préliminaire : un mot sur le format CSV
+
+Le format CSV (Comma-Separated Values) est un format de fichier simple utilisé pour stocker des données tabulaires, comme des feuilles de calcul ou des bases de données. Chaque ligne d'un fichier CSV représente une ligne de données, et chaque valeur dans la ligne est séparée par une virgule (`,`), mais parfois d'autres caractères peuvent être utilisés comme séparateurs, tels que le point-virgule (`;`) ou un simple espace (` `).  
+Ce format est largement utilisé car il est facile à lire et à écrire, et il peut être traité par de nombreuses applications, y compris des logiciels de tableur et des langages de programmation.  
+Les fichiers CSV peuvent être ouverts dans des éditeurs de texte, des applications de tableur ou traités à l'aide de langages de programmation comme Python, R ou des commandes shell.
+
+Par exemple, un fichier CSV pourrait ressembler à ceci:
+
+```
+Name,Age,City
+Alice,30,Paris
+Bob,25,Lyon
+Charlie,35,Marseille
+```
+
+La première ligne est souvent utilisée comme en-tête pour décrire les colonnes, et les lignes suivantes contiennent les données réelles.  
+Dans les exercices, vous rencontrerez des fichiers CSV contenant divers types de données, telles que des informations de vol, des notes, et plus encore. Vous apprendrez à manipuler ces fichiers à l'aide de commandes shell.
+
+### grep
+
+grep - imprimer les lignes qui correspondent à des motifs
+
+
+Exercice:
+ - Isolez la ligne contenant les informations sur le numéro de vol "AA7566" dans le fichier `flights.csv` et enregistrez-la dans un fichier nommé `flight_AA7566_info.txt`.
+ - Quel est le numéro du vol qui **est arrivé** à 21h42 dans le fichier `flights.csv` ? (écrivez la réponse dans le fichier `answers.txt`)
+ - Quel est le numéro de vol de celui opéré par "Air France" partant de l'aéroport Charles de Gaulle (CDG) et arrivant à l'aéroport du Caire (CAI) dans le fichier `flights.csv` ? (écrivez la réponse dans le fichier `answers.txt`)
+
+ Indice: Vous pouvez utiliser la redirection pour enregistrer la sortie d'une commande dans un fichier.
+
+### wc
+wc - imprimer le nombre de nouvelles lignes, de mots et d'octets pour chaque fichier
+
+```
+wc -l <file> # compter les lignes contenues dans le fichier
+wc -w <file> # compter les mots contenus dans le fichier
+wc -c <file> # compter le nombre de charactères contenus dans le fichier
+```
+
+Astuce: La commande `grep` a également une option pour compter le nombre de lignes qui correspondent à un motif.
+
+Exercice:
+- Combien y a-t-il de vols dans le fichier `flights.csv` ? (écrivez la réponse dans le fichier `answers.txt`)
+- Combien y a-t-il de vols opérés par "Air France" dans le fichier `flights.csv` ? (écrivez la réponse dans le fichier `answers.txt`)
+- Combien de mots sont présents dans le fichier `wonderland.txt` ? (écrivez la réponse dans le fichier `answers.txt`)
+
+Astuce: Comme "Air France" est une chaîne de caractères avec des espaces, vous devez mettre des guillemets autour lorsque vous utilisez la commande `grep`. Sinon, le shell interprétera les espaces comme des arguments séparés.
+
+
+### sort
+sort - trier les lignes de fichiers texte
+
+```
+sort -k  <key> -t <delimiter> <file>
+```
+
+- `-k <key>` spécifie la clé par laquelle trier (par exemple, `-k 3` pour trier par la troisième colonne)
+- `-t <delimiter>` spécifie le délimiteur utilisé dans le fichier (par exemple, `-t ','` pour des valeurs séparées par des virgules)
+- `-n` trie numériquement au lieu de lexicalement :
+    - Par exemple, si vous triez les nombres "10" et "2":
+        - en ordre lexicographique, "10" vient avant "2" (parce que "1" vient avant "2" dans la table ASCII : l'alphabet "computers")
+        - en ordre numérique, "2" vient avant "10" (parce que 2 est inférieur à 10)
+- `-r` inverse l'ordre de tri (par exemple, `-r` pour trier par ordre décroissant)
+
+Exercices:
+- Triez le fichier `grades.csv` par la troisième colonne (les notes) par ordre croissant et enregistrez le résultat dans un nouveau fichier nommé `sorted_grades.csv`. (écrivez la réponse dans le fichier `answers.txt`)
+- Triez les vols dans le fichier `flights.csv` par aéroport d'arrivée (par ordre alphabétique), quel est le prix du billet du dernier vol dans la liste triée ? (écrivez la réponse dans le fichier `answers.txt`)
+- Écrivez dans un fichier nommé `on_time_flights_sorted.csv` la liste des vols dans le fichier `flights.csv` avec un statut de vol marqué comme **à l'heure**, triée par le nombre de passagers par ordre croissant.
+
+### head, tail
+
+head - afficher la première partie des fichiers
+head -n <number_of_lines> <file>
+tail - afficher la dernière partie des fichiers
+tail -n <number_of_lines> <file>
+
+
+Exercice:
+- Quelles sont les 5 dernières lignes du fichier `grades.csv`? (écrivez la réponse dans le fichier `answers.txt`)
+- Quelles sont les 10 premières lignes du fichier `grades.csv`?
+- Un peu plus difficile: Extraire 12 lignes du fichier `grades.csv` à partir de la 5ème ligne en **excluant la ligne d'en-tête** et enregistrez-les dans un nouveau fichier nommé `grades_sample.txt` (Astuce: Vous pouvez utiliser une combinaison de `head` et `tail` avec des pipes pour extraire les lignes souhaitées).
+
+### cut
+
+cut - supprimer des colonnes de chaque ligne des fichiers
+
+```
+cut -d <delimiter> -f <fields> <file>
+```
+
+- `-d <delimiter>` spécifie le délimiteur utilisé dans le fichier (par exemple, `-d ','` pour des valeurs séparées par des virgules)
+- `-f <fields>` spécifie les champs à extraire (par exemple, `-f 1,2` pour extraire le premier et le deuxième champ)
+
+Exercice:
+- Extraire la dernière colonne du fichier `grades.csv` (les notes) et enregistrez-la dans un nouveau fichier nommé `grades_only.txt`.
+- Dans le fichier `cars.csv`, extraire les 4 premières colonnes (séparées par des virgules) et enregistrez le résultat dans un nouveau fichier nommé `cars_without_personal_info.csv`.
+
+
+### uniq
+uniq - omettre les lignes répétées
+
+La commande `uniq` est utilisée pour filtrer les lignes répétées dans un fichier. Elle ne fonctionne que sur des fichiers triés, donc vous devrez peut-être d'abord trier le fichier.
+
+Exercice:
+- Combien de marques de voitures uniques sont présentes dans le fichier `cars.csv`? (écrivez la réponse dans le fichier `answers.txt`)
+Astuce: Rappelez-vous des commandes précédemment vues et essayez de les combiner à l'aide de pipes pour obtenir le résultat souhaité.
+
+Bon à savoir: La commande `sort` peut également être utilisée avec une option spécifique pour supprimer les doublons lors du tri. Cela peut être utile si vous souhaitez trier le fichier et supprimer les doublons en une seule étape.
+
+### sed
+
+sed - éditeur de flux pour filtrer et transformer du texte
+
+```
+sed 's/<search>/<replace>/g' <file>
+```
+- `s/<search>/<replace>/g` remplace toutes les occurrences de `<search>` par `<replace>` dans le fichier
+
+Essayez:  
+Remplacez le mot "Alice" par "4l1c3" dans le fichier `wonderland.txt` et enregistrez le résultat dans un nouveau fichier nommé `w0nd3rl4nd.txt`.
+
+# Livrable 2:
+
+# Prérequis:
+
+Désarchivez l'archive `data_102_delivery.tar` dans votre répertoire personnel.
+Extrayez le contenu de l'archive `data_102_delivery.tar` dans votre répertoire personnel.  
+Ensuite, accédez au répertoire `data_102_delivery` nouvellement créé par l'extraction de l'archive.  
+Dans le répertoire extrait, vous trouverez un ensemble de fichiers et de répertoires.  
+Ensuite, procédez à la section suivante pour apprendre à utiliser les commandes `find` et `xargs` ainsi que des techniques plus avancées avec `grep`.
+
+## find et xargs
+
+La commande `find` est utilisée pour rechercher des fichiers et des répertoires dans une hiérarchie de répertoires. Elle peut être utilisée pour trouver des fichiers en fonction de divers critères, tels que le nom, le type, la taille, la date de modification, et plus encore.
+
+La syntaxe de base de la commande `find` est:
+```
+find <path> <options> <expression>
+```
+
+Où:
+- `<path>` est le répertoire dans lequel rechercher (par exemple, `.` pour le répertoire courant)
+- `<options>` sont des options qui modifient le comportement de la commande `find` (par exemple, `-name` pour rechercher par nom, `-type` pour rechercher par type, `-mtime` pour rechercher par date de modification)
+- `<expression>` est l'expression à correspondre (par exemple, `*.txt` pour correspondre à tous les fichiers texte)
+
+Exemple:
+```
+find . -name "*.txt"
+```
+Cette commande trouve tous les fichiers avec l'extension `.txt` dans le répertoire courant et ses sous-répertoires.  
+Notez que le caractère `*` (caractère générique) est utilisé pour correspondre à n'importe quel caractère dans le nom du fichier.
+
+La commande `xargs` est utilisée pour construire et exécuter des lignes de commande à partir de l'entrée standard. Elle est souvent utilisée en combinaison avec `find` pour effectuer des actions sur les fichiers trouvés par `find`.
+
+La syntaxe de base de la commande `xargs` est:
+```
+xargs <command>
+```
+
+Où:
+- `<command>` est la commande à exécuter sur les lignes données en entrée à `xargs`.
+Exemple:
+```
+find . -name "*.txt" | xargs wc -l
+```
+Cette commande trouve tous les fichiers texte dans le répertoire courant et ses sous-répertoires, puis compte le nombre de lignes dans chaque fichier à l'aide de la commande `wc -l`.
+
+Ou vous pouvez utiliser l'option `-exec` de la commande `find` pour exécuter une commande sur chaque fichier trouvé:
+```
+find . -name "*.txt" -exec wc -l {} \;
+```
+Cette commande fait la même chose que la précédente, mais utilise l'option `-exec` de `find` pour exécuter la commande `wc -l` sur chaque fichier trouvé. Les `{}` sont des espaces réservés pour le nom du fichier, et `\;` indique la fin de la commande.
+
+
+#### Exercice final - A:
+- Trouvez tous les fichiers avec l'extension `.csv` dans le répertoire courant et ses sous-répertoires,
+  et comptez le nombre de lignes dans chaque fichier à l'aide de la commande `wc -l`.
+- Trouvez tous les fichiers avec l'extension `.csv` dans le répertoire courant et ses sous-répertoires,
+  et comptez le nombre de fichiers CSV vides.
+- Trouvez tous les fichiers avec l'extension `.csv` dans le répertoire courant et ses sous-répertoires,
+    et concaténez leur contenu dans un fichier unique nommé `all_data.csv`.
+
+## Grep avancé
+
+La commande `grep` est un outil puissant pour rechercher du texte dans des fichiers. Elle peut être utilisée pour rechercher des motifs dans des fichiers, et elle prend en charge les expressions régulières pour des recherches plus complexes.
+
+La syntaxe de base de la commande `grep` est:
+```
+grep <options> <pattern> <file>
+```
+
+Avec l'option `-v`, vous pouvez inverser la recherche, c'est-à-dire qu'elle renverra les lignes qui ne correspondent pas au motif.
+
+Exemple:
+```
+grep -v "pattern" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui ne contiennent pas le mot "pattern".
+
+Avec l'option `-E`, vous pouvez activer les expressions régulières étendues, qui permettent une correspondance de motifs plus complexe.
+
+Exemple 1:
+```
+grep -E "pattern1|pattern2" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui correspondent à `pattern1` ou `pattern2`.
+
+Exemple 2:
+```
+grep -E "^42" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui commencent par le numéro `42`.
+
+Exemple 3:
+```
+grep -E "pattern1$" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui se terminent par `pattern1`.
+
+Bien sûr, vous pouvez combiner ces options avec d'autres options de `grep`.
+
+L'expression peut être combinée entre elles pour créer des recherches encore plus complexes.
+
+Exemple:
+```
+grep -E "^patern1|pattern2$" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui commencent par `pattern1` **ou** se terminent par `pattern2`.
+
+Attention aux caractères spéciaux dans le motif, tels que `.`, `*`, `?`, `$`, `^`, etc. Ces caractères ont des significations spéciales dans les expressions régulières et peuvent devoir être échappés avec un antislash (`\`) si vous voulez les faire correspondre littéralement.
+
+Exemple:
+```
+grep -E "pattern\*" file.txt
+```
+Cette commande recherche des lignes dans `file.txt` qui contiennent la chaîne littérale `pattern*`.  
+Si vous deviez utiliser `grep -E "pattern*"` sans échapper l'astérisque en le précédant d'un (`\`), cela ferait correspondre toute ligne contenant `pattern` suivi de zéro ou plusieurs occurrences de n'importe quel caractère (l'astérisque serait interprété comme un caractère générique), ce qui n'est pas ce que vous voulez dans ce cas.
+
+#### Exercice final - B:
+Des erreurs sont présentes dans le CSV de l'exercice précédent.
+
+En effet, certaines lignes contiennent des adresses IP invalides, votre tâche est de trouver ces lignes et de créer un nouveau fichier nommé `all_data_valid_ip.csv` qui contient uniquement les adresses IP valides (nous ne nous soucions que de l'adresse IP, les autres champs peuvent être laissés de côté).
+Et enregistrez les adresses IP invalides (ici aussi, nous ne nous soucions que de l'adresse IP, les autres champs peuvent être laissés de côté) dans un fichier nommé `all_data_invalid_ip.csv`.
+Enfin, créez une archive nommée `all_data.tar.gz` qui contient les fichiers `all_data.csv`,  `all_data_valid_ip.csv` et `all_data_invalid_ip.csv`.
+
+Astuce: Les adresses IP invalides dans ces fichiers commencent soit par un "0." (par exemple, `0.153.42.12`), soit se terminent par un ".0" (par exemple, `12.0.7.0`).
+
+Astuce: Pour compresser l'archive à l'aide de gzip, vous pouvez utiliser l'option appropriée avec la commande `tar` (lisez la page de manuel de la commande `tar` pour trouver l'option). Ou vous pouvez d'abord créer l'archive puis la compresser à l'aide de la commande `gzip` avec l'option appropriée (lisez la page de manuel de la commande `gzip` pour trouver l'option).
+
